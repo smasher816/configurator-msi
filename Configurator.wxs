@@ -1,0 +1,682 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+
+	<?define Manufacturer="Input Club"?>
+	<?define Product="Kiibohd Configurator"?>
+	
+    <Product Id='752e3741-a1bc-4b98-a853-3d5685683036' 
+		UpgradeCode='0efc0e9b-f4e3-4f6e-a7ee-e49a34ab5d28'
+		Name='$(var.Product)' Manufacturer='$(var.Manufacturer)'
+        Language='1033' Codepage='1252' Version='1.0.0'>
+		
+		<Package Id='*' Keywords='Installer' Description="$(var.Product) Installer"
+			Manufacturer='$(var.Manufacturer)'
+			InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
+			
+		<Media Id="1" Cabinet="configurator.cab" EmbedCab="yes" />
+		
+		<Directory Id='TARGETDIR' Name='SourceDir'>
+			<Directory Id='ProgramFilesFolder' Name='PFiles'>
+					<Directory Id='INSTALLDIR' Name='$(var.Product)'>
+						<Directory Id="dirF1BF06BD132AB42785EAEA32FE5244F3" Name="locales" />
+						<Directory Id="dir08941CEA6046320FCCF158F759AF80F2" Name="resources" />
+						<Directory Id="dir1DB7D5B0CAD42001588B0CA879737F7F" Name="driver">
+							<Directory Id="dir2779E0C89E141675772A8C1A67639128" Name="amd64" />
+							<Directory Id="dir5F2A2DA3699DA074D0C0C7B0B42199AB" Name="x86" />
+						</Directory>
+						<Directory Id="dirF8C45BF1D3FC96F21585483698DCBDDB" Name="utils" />
+					</Directory>
+			</Directory>
+			
+			<Directory Id='AppDataFolder' Name='AFiles'>
+				<Directory Id='AppDataDir' Name='$(var.Product)'>
+					<Directory Id="IndexDir" Name="IndexedDB">
+						<Directory Id="DbDir" Name="file__0.indexeddb.leveldb" />
+					</Directory>
+				</Directory>
+			</Directory>
+			
+			<Directory Id="ProgramMenuFolder" Name="Programs">
+				<Directory Id="ProgramMenuDir" Name="$(var.Product)">
+					<Component Id="ProgramMenuDir" Guid="033bc068-6060-48cb-a27f-a2fe08991e95">
+						<RemoveFolder Id='ProgramMenuDir' On='uninstall' />
+						<RegistryValue Root='HKCU' Key='Software\$(var.Product)' Type='string' Value='' KeyPath='yes' />
+					</Component>
+				</Directory>
+			</Directory>
+			
+			<Directory Id="DesktopFolder" Name="Desktop" />
+		</Directory>
+		
+		<ComponentGroup Id="Configurator">
+			<Component Id='MainExe' Directory="INSTALLDIR" Guid="{1c52d296-2860-41ca-9a6b-f395d25970ed}">
+				<File Id='ConfiguratorExe' Name='Kiibohd Configurator.exe' DiskId='1' Source='kiibohd-configurator\Kiibohd Configurator.exe' KeyPath='yes'>
+					<Shortcut Id="startmenuApp" Directory="ProgramMenuDir" Name="$(var.Product)" WorkingDirectory='INSTALLDIR' Icon="Configurator.ico" IconIndex="0" Advertise="yes" />
+					<Shortcut Id="desktopApp" Directory="DesktopFolder" Name="$(var.Product)" WorkingDirectory='INSTALLDIR' Icon="Configurator.ico" IconIndex="0" Advertise="yes" />
+				</File>
+				<Environment Id="PATH" Name="PATH" Value="[dirF8C45BF1D3FC96F21585483698DCBDDB]" Permanent="no" Part="last" Action="set" System="yes" />
+			</Component>
+			<Component Id="DbLogComp" Directory="DbDir" Guid="{613ec295-3e1f-4176-8b36-f2c3a178939d}">
+				<File Id="DbLogFile" Source="000001.log" />
+			</Component>
+			
+			<Component Id="cmp5AB0F2EA4098C8FA6623C36E7854822A" Directory="INSTALLDIR" Guid="{6E68D168-C3EB-4B3C-8725-DE98E100DC36}">
+				<File Id="fil7BB73CC487C41DE472E8CB4B38CC2D63" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-console-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp77A900935E8FD331768A1DA87B51081F" Directory="INSTALLDIR" Guid="{02B5BBB3-90E3-4AC6-AEF6-CD626F7E4A8C}">
+				<File Id="filB5173D82897A48EC898400BACF4B14C5" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-datetime-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmpB6102BF6000F790BA9C8E5A66F012CA9" Directory="INSTALLDIR" Guid="{12103BD9-253C-4661-96AD-0F71EE012A41}">
+				<File Id="filD2CF00FC708BDCB27A801B67B9E757BF" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-debug-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmpF5132F3F270E855AEBEEC73128FC7B03" Directory="INSTALLDIR" Guid="{6AFD1F79-DAC5-475B-A555-786F5E732A5F}">
+				<File Id="filBE9819BA6471140B666908535A9C2BF2" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-errorhandling-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmpB4ED6C8EB7949C6759F69638040FC1D9" Directory="INSTALLDIR" Guid="{CE25C228-BD09-4485-83E1-06E93F0D88F5}">
+				<File Id="fil5F4C3CB3E64E0D3A0B2EC66877B19189" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-file-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp125D12B2DF8288259E0B725EAAA9BD0E" Directory="INSTALLDIR" Guid="{5AA76C77-475E-478C-ACAC-8EAB8EAB7C71}">
+				<File Id="filAD15A8D3C7E0A940CC4FD51730FC2305" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-file-l1-2-0.dll" />
+			</Component>
+			<Component Id="cmpA4755C7A188C96FC71AF118385CD6FB3" Directory="INSTALLDIR" Guid="{04880575-58F9-4D46-844D-F3851F3470C8}">
+				<File Id="fil03E2ACA6A491526EA0E522206EE55094" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-file-l2-1-0.dll" />
+			</Component>
+			<Component Id="cmp1EFBA872F7C6112B014C8C0B4A6C3813" Directory="INSTALLDIR" Guid="{8618BC82-87A9-4B8A-B66E-AA787074F31F}">
+				<File Id="filC1B2D01710F65FF515215AB5C07140AE" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-handle-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp3F78C06EEE4E97F082A76CA86E5076EB" Directory="INSTALLDIR" Guid="{3D0F4416-F1F3-4ED1-A4E9-3C9E550BB209}">
+				<File Id="filB4992193F870BDACD1B41318F23B6800" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-heap-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp18337863FCF5220B5A355269A2B3E853" Directory="INSTALLDIR" Guid="{60BA3416-9819-453E-818D-7D5CA6F060BC}">
+				<File Id="fil2752B1E0AD2DC366533B2E91A063FC97" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-interlocked-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp1859CDA9CADB9BA267AD1EE469ECB604" Directory="INSTALLDIR" Guid="{0DDCC487-68EF-4B96-8153-06D995C3F621}">
+				<File Id="filEE9D6302F78E6B28F6F61CF98D1A7CA3" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-libraryloader-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp99A35EB81BDB96A49E2D676EA94BAC1F" Directory="INSTALLDIR" Guid="{10AE5E82-2F14-421D-8548-DBDB1097C797}">
+				<File Id="filB0858F45121E715456755276939CC7F4" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-localization-l1-2-0.dll" />
+			</Component>
+			<Component Id="cmpEB22A3CD57A9EB830C19E74F981ADE16" Directory="INSTALLDIR" Guid="{AC652AF8-6580-4392-81B0-B5B83DAEE733}">
+				<File Id="filA855826C112F7D5B1486DCB548B6FE50" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-memory-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp9B1C6B0012F958FCBA4A3E95C0FDE8F3" Directory="INSTALLDIR" Guid="{63469D94-0BF6-4BF3-8603-F6FEDF597673}">
+				<File Id="fil5CD395BB1D212BDB65A1DA4C14EE81C5" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-namedpipe-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp6A7359A44BAE524216C49C0B1F1D27B4" Directory="INSTALLDIR" Guid="{46A3F334-5642-4A45-B728-17D2C42878B3}">
+				<File Id="fil40C31ED4BD3780590EA95DCF8C965163" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-processenvironment-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmpE0A9F7AA0FB92651DFE0A8C267A92D50" Directory="INSTALLDIR" Guid="{63F7C392-1741-476A-B09A-AF7D01EA6CAF}">
+				<File Id="fil56F9EA5AA10D5CBB086D9C017F721C81" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-processthreads-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmpDFCA9ACD11AE5F6FDB272BE054281E36" Directory="INSTALLDIR" Guid="{14A22E31-0DF7-4306-A4BF-5AD555AEA738}">
+				<File Id="fil8CC3A701DF0E93CEEE695C1507134FF2" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-processthreads-l1-1-1.dll" />
+			</Component>
+			<Component Id="cmp4EBB1CF14C28A866418EA34176073708" Directory="INSTALLDIR" Guid="{C1EC954D-5CA5-40DF-AB50-6E91E81B24D4}">
+				<File Id="fil2D84C6C33BA167228043DA0DAB7BEF72" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-profile-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp6D634BFC6FFED3AC0890BE9CC6DC3B31" Directory="INSTALLDIR" Guid="{0A336BB7-D0DE-4623-A103-C0E514018304}">
+				<File Id="filB41CF17F6D57C50B97BB25EB5FC5673D" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-rtlsupport-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp9E742DE9CC5E24ACCB4F104D72DFED39" Directory="INSTALLDIR" Guid="{1DE5F434-6E7C-4A0F-A29D-BA682A0564BD}">
+				<File Id="fil41C87D5C0D01A9073FF111DEB1033E82" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-string-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmpDAB4791F865CE8BE5FFD9F021CC52870" Directory="INSTALLDIR" Guid="{C4AF619B-6968-4094-BC39-F08F0AE3CDBE}">
+				<File Id="filBCD8D74DE838535342A3F438E99B51EE" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-synch-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp92D95FB7A95656B526E42DAD225A345F" Directory="INSTALLDIR" Guid="{C1D69186-2A8A-4B48-8780-F4CB95CF7926}">
+				<File Id="filE742F061FF9C02C5955DBF66D126F188" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-synch-l1-2-0.dll" />
+			</Component>
+			<Component Id="cmpDB6CA90E55234EC386DFF4049F6F5887" Directory="INSTALLDIR" Guid="{3CC916A8-FA65-4B54-9525-3F98869BD868}">
+				<File Id="fil65C699B3ACB8BFC56C362F25D4B32A4A" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-sysinfo-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp64DD83EC06A3FF7E1B330B75F1703D73" Directory="INSTALLDIR" Guid="{D91148BC-FFE5-40DB-B3F7-CB0BE0B1762A}">
+				<File Id="fil2EFBEF99D46C847BC9299D2F5C7F5F08" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-timezone-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmpFCFAF20A6788C0522AFD42DD1BB6B9AD" Directory="INSTALLDIR" Guid="{808B8CE6-208A-4C2A-A65B-5871057CFF38}">
+				<File Id="fil857A5FB68D5FA94F25AD7D41DD9B946C" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-core-util-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp392C11BB04CB5E0F9EF5EE793B817BF9" Directory="INSTALLDIR" Guid="{1AE54FEB-8CA4-4901-96F2-59E5BF35600B}">
+				<File Id="filAC952539475925277CDC0DA2DD4EF471" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-crt-conio-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp08C87F3B2EBE85532A131222B39C6B5C" Directory="INSTALLDIR" Guid="{3501350A-437C-41C8-9F0E-B09F49B276B8}">
+				<File Id="fil9630F70C8F02928CB098D0C1E905464E" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-crt-convert-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp11E317A573A771B5BEE42E9619BB90DB" Directory="INSTALLDIR" Guid="{5FD0E1A0-4BB5-4B43-8A71-C6647FD563A8}">
+				<File Id="fil5CD04EF55E775B2F3B284370286847D0" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-crt-environment-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp7C3F7CC527EA7F7EA417A8F41AF1C870" Directory="INSTALLDIR" Guid="{80CD27BF-57A7-44FF-BE4C-AF618A385F5A}">
+				<File Id="fil749731E9D9242DA5039BFE913FDD6B73" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-crt-filesystem-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp381CA3F72F39C69A330184BCA4760F80" Directory="INSTALLDIR" Guid="{C2A5ABD9-7BF4-4585-8C7D-6DBD2AA5A612}">
+				<File Id="fil1AC75384C2A4B8C63B7ABE4EE0383330" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-crt-heap-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp1D856585847E0007643717B7BAF9FE0F" Directory="INSTALLDIR" Guid="{B21BAA5C-504B-4403-AFE7-CA3FC4C1BD77}">
+				<File Id="filCA5079D98207C308173F8B2C7C754220" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-crt-locale-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp0C37D6E4DBA2A7EE45630E93BBD4C9C6" Directory="INSTALLDIR" Guid="{DAAF16A4-8A5A-4AE0-86DD-C6857A6C544E}">
+				<File Id="fil6CDE0341AF77ED857694DBA736D1CAC4" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-crt-math-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp883AAAAB791C10E70070B67CB331DFB4" Directory="INSTALLDIR" Guid="{A6176629-5213-4B11-9B3A-1D7BE1603374}">
+				<File Id="filFE34EC78E999B7FD023B7E2126DB0B08" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-crt-multibyte-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp3CC4A9196B28327C9AA4781B682A4382" Directory="INSTALLDIR" Guid="{1E3C6D5F-A763-4E41-9F83-F14D6EAC450F}">
+				<File Id="fil182030CA9B6E4179F4F82C743A02D5FB" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-crt-private-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp85EA7A7B02ACC56FCD1CED4AB64F7111" Directory="INSTALLDIR" Guid="{FE4FF3C5-471A-41E7-8B79-DFC840807A69}">
+				<File Id="fil2DED72A2F32055787274D7E8557DB77D" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-crt-process-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp618CEC0EE90C149B43B071B426F6583F" Directory="INSTALLDIR" Guid="{7C07F915-00AE-4B76-89F0-7365F8FEAD5E}">
+				<File Id="fil998DB4044C0FFC28B134366BF0F4382E" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-crt-runtime-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmpB893D6AEF45AD0187444C270460566E9" Directory="INSTALLDIR" Guid="{7E194073-CA99-4A49-9273-AC7F949AF207}">
+				<File Id="filD6C85FAC000462C2708DD47D0D70797F" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-crt-stdio-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp39F50ED12AE4B4826486C06AB2C9EB31" Directory="INSTALLDIR" Guid="{99A54FC7-1E09-4238-AC18-640B50EA0A81}">
+				<File Id="filFF2E4BF2CAEF44EF20A417668D43BD34" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-crt-string-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmpC894A03FEB631AF078490B64FDE289D6" Directory="INSTALLDIR" Guid="{64CD25BF-0C38-4291-A67B-9B97A912E4A3}">
+				<File Id="fil82CE3CAE9FE664D97F3CDBDFF99965DC" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-crt-time-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmp2C50AEC1B6D710EE9794C4F7EBC8B12B" Directory="INSTALLDIR" Guid="{57291AB3-C5A7-4DBE-AC46-F67E5E643641}">
+				<File Id="fil91C6B294EC7B98463D0CFDFE873D7EDB" KeyPath="yes" Source="kiibohd-configurator\api-ms-win-crt-utility-l1-1-0.dll" />
+			</Component>
+			<Component Id="cmpE5FFCA23D74D67626513BEF05C0CF33F" Directory="INSTALLDIR" Guid="{5B67C0A9-AC7F-42D6-9501-832E49B47EDF}">
+				<File Id="filF344183532AF6844B589C75C3BC3A1AD" KeyPath="yes" Source="kiibohd-configurator\blink_image_resources_200_percent.pak" />
+			</Component>
+			<Component Id="cmpE9104AF81998236F5E0B5991509B43D7" Directory="INSTALLDIR" Guid="{6D2E0774-D960-416D-A7C8-C7371FF51EFB}">
+				<File Id="fil4FC315AC810B171AB61DDE2B38BB7168" KeyPath="yes" Source="kiibohd-configurator\content_resources_200_percent.pak" />
+			</Component>
+			<Component Id="cmp72944A75E5587EF509CDE0F0BB120726" Directory="INSTALLDIR" Guid="{0FBFC438-B71D-45BE-99F3-004088137783}">
+				<File Id="fil9D317E901F97FCB0B2E18D5E543E1D28" KeyPath="yes" Source="kiibohd-configurator\content_shell.pak" />
+			</Component>
+			<Component Id="cmpBD33227FC5AD6BA1A293384B57B5C3E1" Directory="INSTALLDIR" Guid="{D70FC3BE-FEC7-45B8-B32C-D2BE16025E7F}">
+				<File Id="filF7FA605CFD2E8074C565F825A465F67E" KeyPath="yes" Source="kiibohd-configurator\d3dcompiler_47.dll" />
+			</Component>
+			<Component Id="cmp71567E5444CCA105A5965005C3082A52" Directory="INSTALLDIR" Guid="{C32C2114-F887-40C0-9D24-D0015CA40177}">
+				<File Id="filC200D595BB8933643193E1A18E97C163" KeyPath="yes" Source="kiibohd-configurator\ffmpeg.dll" />
+			</Component>
+			<Component Id="cmp5EF33DB27476053110B8ED6B72DE49F7" Directory="INSTALLDIR" Guid="{3CC1DC19-07CC-4F3A-8910-18D3B51720DF}">
+				<File Id="fil91294B4FD0B8D3A66D0148E73BE874F9" KeyPath="yes" Source="kiibohd-configurator\icudtl.dat" />
+			</Component>
+			<Component Id="cmp39843742AA799691811E9DC248DE1144" Directory="INSTALLDIR" Guid="{C799C333-BF8B-405F-BCBD-888CED277917}">
+				<File Id="filC800376F86F561DED9A4D88388A89DB6" KeyPath="yes" Source="kiibohd-configurator\libEGL.dll" />
+			</Component>
+			<Component Id="cmpC060CA73CA0DA80FFA1A2530FD69D32E" Directory="INSTALLDIR" Guid="{194E1689-ED11-4CA7-ADD6-8449BC5D53B4}">
+				<File Id="fil44BA20CAA03F9C9B0B76809FD2EE34FD" KeyPath="yes" Source="kiibohd-configurator\libGLESv2.dll" />
+			</Component>
+			<Component Id="cmpE0BC2BE70D0A8D0306356E0EC5446343" Directory="INSTALLDIR" Guid="{61D83587-B5DE-478C-B107-C0C904611225}">
+				<File Id="fil6E471B9979A0D1E6F2E6964C8E4B165D" KeyPath="yes" Source="kiibohd-configurator\LICENSE.electron.txt" />
+			</Component>
+			<Component Id="cmp06B9A8B6838700D97C90323B3C7FD343" Directory="INSTALLDIR" Guid="{62C9C8F1-D5B0-43BD-9C61-C39404946C7E}">
+				<File Id="fil31F6DDDADEC521643FF00C045D6026EB" KeyPath="yes" Source="kiibohd-configurator\LICENSES.chromium.html" />
+			</Component>
+			<Component Id="cmp13914CB425E11357E5413C831259F204" Directory="INSTALLDIR" Guid="{E409F974-598C-4679-A584-8C9B4B82DD1E}">
+				<File Id="fil6D74A861167AB5773618CE599EE4E30B" KeyPath="yes" Source="kiibohd-configurator\msvcp140.dll" />
+			</Component>
+			<Component Id="cmpB1F17BC0E3ED04090280E304BD8A4F25" Directory="INSTALLDIR" Guid="{075CB675-7DF8-4E9A-B424-B7348617A14E}">
+				<File Id="filD9CE5C873D9A1E538820AB4A598A6DDA" KeyPath="yes" Source="kiibohd-configurator\natives_blob.bin" />
+			</Component>
+			<Component Id="cmp1D1F7DBD040C81ADD367AA3F9565EB88" Directory="INSTALLDIR" Guid="{5E75B790-DFEB-4A3B-997A-8771606FF0E5}">
+				<File Id="filE3DCD2E19FDAC08B4E4536C84704A90C" KeyPath="yes" Source="kiibohd-configurator\node.dll" />
+			</Component>
+			<Component Id="cmpCAC63923EC4D7948313EC7BECC0E997D" Directory="INSTALLDIR" Guid="{5A2FD848-78FE-4FF0-AB8F-9609FF6DDB9C}">
+				<File Id="fil0F39B296AA9E3AB0123D06ECFEB77EE0" KeyPath="yes" Source="kiibohd-configurator\pdf_viewer_resources.pak" />
+			</Component>
+			<Component Id="cmp1FB009079E4F01263809C5B73F0958F9" Directory="INSTALLDIR" Guid="{3B550FF8-8CBE-43BE-95A9-75B47B491761}">
+				<File Id="filE39FC5D7B054331EE0627060BF83B92A" KeyPath="yes" Source="kiibohd-configurator\snapshot_blob.bin" />
+			</Component>
+			<Component Id="cmpF82F512698CC77010A08EE6180AE27FE" Directory="INSTALLDIR" Guid="{8F84F26F-E9EF-422B-A4C1-C9884B568C47}">
+				<File Id="fil0CF553CD1739AF41D4D65D11EF511B57" KeyPath="yes" Source="kiibohd-configurator\ucrtbase.dll" />
+			</Component>
+			<Component Id="cmp6E61FB26501472F83DD2EEB9A4EFEA57" Directory="INSTALLDIR" Guid="{02646A97-6486-43A0-BAB3-EF632B0A2156}">
+				<File Id="fil7883CD21918D3580DCB8DEEF96C7DB67" KeyPath="yes" Source="kiibohd-configurator\ui_resources_200_percent.pak" />
+			</Component>
+			<Component Id="cmpAB342565E065B81D5097FF157FC1B507" Directory="INSTALLDIR" Guid="{A288DF28-77A8-4023-8D3F-375A9E4A8B46}">
+				<File Id="fil65E2E3E594B7F200AC31B9E5304738A7" KeyPath="yes" Source="kiibohd-configurator\vcruntime140.dll" />
+			</Component>
+			<Component Id="cmpAE041A1E6C5FECC629CCD9E69016FF49" Directory="INSTALLDIR" Guid="{137AAF46-6596-473A-B67E-BBFEDE7922C8}">
+				<File Id="fil27E1DF2B870ED17871B3D32FCC63E9A6" KeyPath="yes" Source="kiibohd-configurator\views_resources_200_percent.pak" />
+			</Component>
+			<Component Id="cmpD8589C528AE3B830FA893D5A5F5BA973" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{0386BF62-D0BE-4598-9048-7E64AB6BFD7A}">
+				<File Id="fil9D4A10F80BEF7485457096E5F78B93A5" KeyPath="yes" Source="kiibohd-configurator\locales\en-US.pak" />
+			</Component>
+			<Component Id="cmp116B1CB9700D9BA4168E411B1FB74732" Directory="dir08941CEA6046320FCCF158F759AF80F2" Guid="{9CB22E7D-26A7-4351-930D-2DC3F1F5C459}">
+				<File Id="filDE40BDB683D0CE111DB9640F76108F2E" KeyPath="yes" Source="kiibohd-configurator\resources\app-update.yml" />
+			</Component>
+			<Component Id="cmp8C39B0DF367B81D107B857224844C60A" Directory="dir08941CEA6046320FCCF158F759AF80F2" Guid="{22447FD2-B3C3-4D35-AF9E-4E814E201854}">
+				<File Id="fil646A0C0D903FCF8F804AB48570970DE4" KeyPath="yes" Source="kiibohd-configurator\resources\app.asar" />
+			</Component>
+			<Component Id="cmpA5AE6E64FCBACA6EAA8DE8382274AB13" Directory="dir08941CEA6046320FCCF158F759AF80F2" Guid="{537F2BB9-73CB-43E9-9F9B-982C2E264BE9}">
+				<File Id="fil6FD3E167040792EECABECBBAABFD4F94" KeyPath="yes" Source="kiibohd-configurator\resources\electron.asar" />
+			</Component>
+			<!-- <Component Id="cmp00DD7DB8AD911806F2D43EB0C0A5420F" Directory="dir08941CEA6046320FCCF158F759AF80F2" Guid="{BC010EB1-9A2A-4862-A371-5DDB8D6515A2}">
+				<File Id="filA683246382B1B8DE4BBF24831C85E1FC" KeyPath="yes" Source="kiibohd-configurator\resources\elevate.exe" />
+			</Component> -->
+		</ComponentGroup>
+		
+		<ComponentGroup Id="Locales">
+			<Component Id="cmpA8CB3A03C8CB4AB26132F3B007E3F867" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{94340647-A3C6-4FA8-AEA8-675CD6312B3A}">
+				<File Id="filE6A054E8C65066EABB377E1E1C9B8988" KeyPath="yes" Source="kiibohd-configurator\locales\am.pak" />
+			</Component>
+			<Component Id="cmp7216062B8270B31808861AC83B7CC0CC" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{BC0E00D4-7984-48E7-81F0-F0600DB2E61E}">
+				<File Id="filB1315F7550FBBBC94A64E01FD544447A" KeyPath="yes" Source="kiibohd-configurator\locales\ar.pak" />
+			</Component>
+			<Component Id="cmpE887695C2149C2F4CB8D8782AE7285AC" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{A80575DF-612A-4561-9049-4B7C42F12436}">
+				<File Id="fil13096D63F666136F4AC0D34DDAFC8B0A" KeyPath="yes" Source="kiibohd-configurator\locales\bg.pak" />
+			</Component>
+			<Component Id="cmp5E5BE1B6387AECED0B3553551910BCD4" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{9BD0E245-F9A1-4CB0-B910-85408FB476EA}">
+				<File Id="filF8B9C02A53580D051995B12551318B4B" KeyPath="yes" Source="kiibohd-configurator\locales\bn.pak" />
+			</Component>
+			<Component Id="cmp74A74712C6A8A2920CF36D54910BEAC8" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{9B531E5B-EB2D-48BA-BD7A-6D8276FDAE0E}">
+				<File Id="fil43F9CCEDE49E8A8932A7696CA8073329" KeyPath="yes" Source="kiibohd-configurator\locales\ca.pak" />
+			</Component>
+			<Component Id="cmp80E95C5092F6D6833997F223968AC329" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{FBB984DE-EFDE-48C2-B27B-1BAEB2EE41F5}">
+				<File Id="fil002E96F302DD87ABD61652FFB21E8F9F" KeyPath="yes" Source="kiibohd-configurator\locales\cs.pak" />
+			</Component>
+			<Component Id="cmp276C73199D3DB543D402067FCA63A4E7" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{36C82209-0145-4CB9-9231-08C22B9264CF}">
+				<File Id="fil55C0C1B91F13D03F4099F36DE43636E8" KeyPath="yes" Source="kiibohd-configurator\locales\da.pak" />
+			</Component>
+			<Component Id="cmpE2E45B22CBD50D801F0BB27A6413B0D6" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{59ADBA33-5CF7-4FC3-897A-F4B562E49B6E}">
+				<File Id="filD40293FAA0D3B3F52F13E65CC82B16C2" KeyPath="yes" Source="kiibohd-configurator\locales\de.pak" />
+			</Component>
+			<Component Id="cmpE9504A1A881CE5A7DDBEE2140B82F2CA" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{5E312F77-594F-46ED-AA92-0ED22B4D2F55}">
+				<File Id="fil14A643D36140D0F7B2DFC7EBF2BB4F15" KeyPath="yes" Source="kiibohd-configurator\locales\el.pak" />
+			</Component>
+			<Component Id="cmpF38CE4728E56D7BE18B83314C75F0AA9" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{8AB2E443-10A4-464E-9162-51A08F7D1B00}">
+				<File Id="fil83B7E185871DF643F7246AD449936096" KeyPath="yes" Source="kiibohd-configurator\locales\en-GB.pak" />
+			</Component>
+			<Component Id="cmp54996CB903CFE650F0537B2C845826A1" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{0C532019-181E-4098-A5E7-8FD7BBAFB205}">
+				<File Id="filAD1CA2AD6D5434BAFD941258642FB3D0" KeyPath="yes" Source="kiibohd-configurator\locales\es-419.pak" />
+			</Component>
+			<Component Id="cmpB5DAE1393B9270B3144052F695AF2BAA" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{9C31C673-290B-4D06-AC3E-B8462C5757C4}">
+				<File Id="fil24945FC1CAA622A1CE1C87B4EB1F7BFC" KeyPath="yes" Source="kiibohd-configurator\locales\es.pak" />
+			</Component>
+			<Component Id="cmpDF6C8FBE282A35A0285750EBEF58BAE4" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{C0D4E506-2BC6-4E93-BC75-4A9AC9DE091A}">
+				<File Id="fil1520C6B1A67C425686311220127DFE07" KeyPath="yes" Source="kiibohd-configurator\locales\et.pak" />
+			</Component>
+			<Component Id="cmp40BDA752622EC573BFE1F56D9725B2B8" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{E7851957-6DBC-4E51-8E0A-156B6662A51E}">
+				<File Id="fil013ACE5F37550AE24F83F014A097C52A" KeyPath="yes" Source="kiibohd-configurator\locales\fa.pak" />
+			</Component>
+			<Component Id="cmpD195EE93E935983B00CD6AD7E31A9AC8" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{49553FC6-4E55-41B3-BA44-F810418922CB}">
+				<File Id="filFFAE72D80D66BE3B5AC516B51A0852A3" KeyPath="yes" Source="kiibohd-configurator\locales\fake-bidi.pak" />
+			</Component>
+			<Component Id="cmpAEC0DDB6FEBF0C1EF520F44E26E95B4E" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{616EB3BB-E740-4DDA-B5AF-92657D1FEBA1}">
+				<File Id="fil6009AE8D17C0DA57D0B293073EF88B58" KeyPath="yes" Source="kiibohd-configurator\locales\fi.pak" />
+			</Component>
+			<Component Id="cmpCF099578836BB263ABC89662EE363BD6" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{2C533A5F-3D4E-4F05-8C30-5D1C8AAE6CF2}">
+				<File Id="fil3E67B9673D76AB4B3C55F87D73A6FC26" KeyPath="yes" Source="kiibohd-configurator\locales\fil.pak" />
+			</Component>
+			<Component Id="cmp60EC649FC599DC7C733F58C9A8EEFAF4" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{9846D1DB-9E2E-4915-9C76-A0E651DE2C55}">
+				<File Id="fil7D4D958049F03BAAFDA124BF2C78FB3E" KeyPath="yes" Source="kiibohd-configurator\locales\fr.pak" />
+			</Component>
+			<Component Id="cmp375D297199CA6405024BB3ADADE33910" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{B79AEB8A-9C82-4F36-86A5-449A49C7ADE7}">
+				<File Id="filC4C8B870A6D9463CFFEA236042AAC7A7" KeyPath="yes" Source="kiibohd-configurator\locales\gu.pak" />
+			</Component>
+			<Component Id="cmpAC31DCD9E2F093327306EFBB67C326AB" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{FD008D2E-6FD4-4F6A-9AE5-526E2ABF911E}">
+				<File Id="fil1147925D366D76078BF09B225EB99018" KeyPath="yes" Source="kiibohd-configurator\locales\he.pak" />
+			</Component>
+			<Component Id="cmp61D1BEDCBD9E2EBD443FE663550818CC" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{FC357CAB-5E26-4369-B745-E89FA2921131}">
+				<File Id="filF8F06F824B3A7BDD86EE9142003B586F" KeyPath="yes" Source="kiibohd-configurator\locales\hi.pak" />
+			</Component>
+			<Component Id="cmp461755518B95856DFA594ED7CEE1A845" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{FEAC5003-00D7-4BCE-9DF3-BBC9DB91D8F0}">
+				<File Id="filCC731EA5EB319FF75C1D5585408C6C2C" KeyPath="yes" Source="kiibohd-configurator\locales\hr.pak" />
+			</Component>
+			<Component Id="cmp7891326BAD91A07334923A463DA2C7C9" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{152CE073-A6F8-4D0C-8824-F21FEFA5C6F0}">
+				<File Id="fil51F8641268AC3B3B5518A75A4C0EA3B0" KeyPath="yes" Source="kiibohd-configurator\locales\hu.pak" />
+			</Component>
+			<Component Id="cmp5C35B1ACB1791E37EF9CE142841F8E5C" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{8DABF0B7-F713-4C02-85A5-1993B8D79D39}">
+				<File Id="filAA4920D6A544BC6776294868B1EE93C2" KeyPath="yes" Source="kiibohd-configurator\locales\id.pak" />
+			</Component>
+			<Component Id="cmp7B885FD6917D7F1A54C635B98FE1A78B" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{39633E11-894E-4827-B444-FA8D357C045A}">
+				<File Id="fil9349C9779BB59DD3084F2E0E2729C448" KeyPath="yes" Source="kiibohd-configurator\locales\it.pak" />
+			</Component>
+			<Component Id="cmp8D16EE75D16A2A4421DBE19639160D92" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{3759AB8F-F65D-4CB3-BA2E-B401E625593E}">
+				<File Id="filB715DB06A6C23D6A244DAC788B8E5FD3" KeyPath="yes" Source="kiibohd-configurator\locales\ja.pak" />
+			</Component>
+			<Component Id="cmp190DCCEC794B76C359A3230B3790AFBB" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{7FDB311B-ABD3-4871-B46F-B0D6B6DE7301}">
+				<File Id="fil375C6E61A37E0D05C1C64718D5728110" KeyPath="yes" Source="kiibohd-configurator\locales\kn.pak" />
+			</Component>
+			<Component Id="cmpB9584AEB89CEFC7A639394105F4AD126" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{D9ADCE66-BC40-49EE-BB53-9963290C1DAB}">
+				<File Id="fil51D86F8987C3993D75216928E908A8FE" KeyPath="yes" Source="kiibohd-configurator\locales\ko.pak" />
+			</Component>
+			<Component Id="cmpBE1F47FADC1F10C1E04D68303129DE28" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{AEF6AF73-8617-4023-9428-463809234520}">
+				<File Id="filB80B156299B752F4827D3088EA9A4C56" KeyPath="yes" Source="kiibohd-configurator\locales\lt.pak" />
+			</Component>
+			<Component Id="cmp2E869EFDF754DEDC6112CEFCBDE142D4" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{A45F3B2E-AAD0-426A-8CE7-41D121798083}">
+				<File Id="filAA0C15A59D36EB0B7B8011D90FA9BB5A" KeyPath="yes" Source="kiibohd-configurator\locales\lv.pak" />
+			</Component>
+			<Component Id="cmp9EF02D4A984A9B213D18B1E905CE4D64" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{DE0AF2CF-B3E5-40D8-8F31-87A96AA16A5C}">
+				<File Id="fil5943467C1F4A7E1668570905A644BDA6" KeyPath="yes" Source="kiibohd-configurator\locales\ml.pak" />
+			</Component>
+			<Component Id="cmp4B893DE3420C1852DF2B8CAF4BED3CFA" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{1FC09F31-AA44-4132-B16F-946534E1E239}">
+				<File Id="fil918F2757E3AEF2758039E38146D50EE5" KeyPath="yes" Source="kiibohd-configurator\locales\mr.pak" />
+			</Component>
+			<Component Id="cmpE7F92FE11124AB7E04494A3F55E2261D" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{5AC3D785-BACF-4B98-B407-A715F6AB2D6C}">
+				<File Id="fil61F2AB20796AE969BC1751A3F5B7CF89" KeyPath="yes" Source="kiibohd-configurator\locales\ms.pak" />
+			</Component>
+			<Component Id="cmp05D4A66B15C4BA29DC8BA8318DF72477" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{59C660DE-6C2A-4687-B93E-5A6251E1CF47}">
+				<File Id="fil6AC91468110EB7DDEF08BED7DA620B8D" KeyPath="yes" Source="kiibohd-configurator\locales\nb.pak" />
+			</Component>
+			<Component Id="cmp0B5A0BDCD47F802D40AC1BA38A8ED59E" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{D2969415-3335-428B-9075-FEF28FCBB6E5}">
+				<File Id="fil80D60EFB720D565340CF72AAD54E76E4" KeyPath="yes" Source="kiibohd-configurator\locales\nl.pak" />
+			</Component>
+			<Component Id="cmpA3C5B8F5310D484FF27B428C1D37C97A" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{1A25F0E6-069D-4C61-8ED1-69C7087295BF}">
+				<File Id="fil85E7B245CF1D0AD7792C3AA7B6CD75C7" KeyPath="yes" Source="kiibohd-configurator\locales\pl.pak" />
+			</Component>
+			<Component Id="cmpB740186BF60F2753DE537CEC675C9356" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{5EC331BC-50CF-433E-A73E-C2CB08667284}">
+				<File Id="fil352C4D1BDDB099709D952CE5E4E1428D" KeyPath="yes" Source="kiibohd-configurator\locales\pt-BR.pak" />
+			</Component>
+			<Component Id="cmp22CD4ABBF63095D16352BD54054754E1" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{B2F73DDA-4866-4FB2-BB54-C6C847530A9D}">
+				<File Id="fil9FDD0DE6C0F10FA6C5A809E678F3A95C" KeyPath="yes" Source="kiibohd-configurator\locales\pt-PT.pak" />
+			</Component>
+			<Component Id="cmp16BFE9D20E9015B3C1525B93B08D0E67" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{B5307EB4-7852-4D17-AE76-635469C42442}">
+				<File Id="filDE8B7220768477482462C3229229C960" KeyPath="yes" Source="kiibohd-configurator\locales\ro.pak" />
+			</Component>
+			<Component Id="cmp277AC281D094F0BCB835A68EADFC0BC3" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{B3978653-E553-42A3-B1E5-71B52563B823}">
+				<File Id="fil643C6316C18E93D3FB70BED1DE33463E" KeyPath="yes" Source="kiibohd-configurator\locales\ru.pak" />
+			</Component>
+			<Component Id="cmpD4DDD8BC299464DE9DA1EFC48762AE5E" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{4F617708-FACE-491C-AE8F-8B920EE87270}">
+				<File Id="fil0D00A6AFE18EBD64DF4C310C055838BE" KeyPath="yes" Source="kiibohd-configurator\locales\sk.pak" />
+			</Component>
+			<Component Id="cmpA7E140A6486E4C9B0CBF81C506CDD690" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{FE4A4829-EF35-4431-BEA4-74EE770363BF}">
+				<File Id="filFAFF920EDCCA53672921F0EEA349F994" KeyPath="yes" Source="kiibohd-configurator\locales\sl.pak" />
+			</Component>
+			<Component Id="cmpBEDB99FF072906531960762778010BF0" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{94856180-77B2-4B84-9CE3-D9036B431091}">
+				<File Id="filEBD72B260BF18DBE668758EDD9E2141A" KeyPath="yes" Source="kiibohd-configurator\locales\sr.pak" />
+			</Component>
+			<Component Id="cmpD243B5B9D5BAEF95AFF190AF9EAB2F5D" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{2B0DE94D-AF4A-4613-BCA2-394F166306AA}">
+				<File Id="filC98E034C5B6008836355F3A9D97E8BFC" KeyPath="yes" Source="kiibohd-configurator\locales\sv.pak" />
+			</Component>
+			<Component Id="cmp422930331FAB0886984F55A733A63EE6" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{F18D109B-5BAC-4494-9B03-64109241FBA9}">
+				<File Id="fil08499B26BD910E257724AE0BFF98C062" KeyPath="yes" Source="kiibohd-configurator\locales\sw.pak" />
+			</Component>
+			<Component Id="cmp580E0915B6739E8A3C0CC17E0AA1351B" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{B80A49F7-DA9F-4024-BE3D-4E892545DA3C}">
+				<File Id="fil92C396A1903A7624B12B876D391FE832" KeyPath="yes" Source="kiibohd-configurator\locales\ta.pak" />
+			</Component>
+			<Component Id="cmp824B6A44A33399868460C0CB0C4EAF0D" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{6768184A-7442-42A2-964B-7215CC8DA759}">
+				<File Id="filC8571DF9D2AB182E617DBA80CF9760A8" KeyPath="yes" Source="kiibohd-configurator\locales\te.pak" />
+			</Component>
+			<Component Id="cmpD8399251AA94B98CB23880AABE3E7211" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{DF407D84-861E-4DD0-9A51-5D584BC201D5}">
+				<File Id="filB047EE52B770A8E56593CE51D6C6120A" KeyPath="yes" Source="kiibohd-configurator\locales\th.pak" />
+			</Component>
+			<Component Id="cmp8362490663E817F14E962C8D7B81237E" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{D24A51E9-58BE-48BB-9DA6-237B07DC0379}">
+				<File Id="fil829BD3E6D9148F7088459631128085CC" KeyPath="yes" Source="kiibohd-configurator\locales\tr.pak" />
+			</Component>
+			<Component Id="cmpB9145CEA335FA3D4543B407783A86559" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{44A4F9B4-CC69-4DC7-AC42-832E4F629ED4}">
+				<File Id="fil6E365136C90575419C693752079335ED" KeyPath="yes" Source="kiibohd-configurator\locales\uk.pak" />
+			</Component>
+			<Component Id="cmpA95650061D210015859995F8C7981783" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{D0369A99-125B-42C8-B014-1DAC42C74FA9}">
+				<File Id="filA61E6BAC2D933E05CAA86E4DED311B1A" KeyPath="yes" Source="kiibohd-configurator\locales\vi.pak" />
+			</Component>
+			<Component Id="cmp6DFDC7F85E08A93C151CD5C02B4BA1F4" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{0989FC7C-D593-4857-857A-A01C260CBD3E}">
+				<File Id="fil54EEC4C936524E18345F5EEF75732E75" KeyPath="yes" Source="kiibohd-configurator\locales\zh-CN.pak" />
+			</Component>
+			<Component Id="cmpF46A5494D5C3EA3DC118E8F4FF044BCD" Directory="dirF1BF06BD132AB42785EAEA32FE5244F3" Guid="{A65DAC4C-ED79-4637-A2FF-7932B2B36AD3}">
+				<File Id="fil2DBBA588FC9F69CEFA718F2805524B91" KeyPath="yes" Source="kiibohd-configurator\locales\zh-TW.pak" />
+			</Component>
+		</ComponentGroup>
+		
+		<ComponentGroup Id="dpinst">
+			<Component Id="cmpF11434C76316F8E9F4DE9562CF946EF8" Directory="dir1DB7D5B0CAD42001588B0CA879737F7F" Guid="{EE982DEE-E048-433B-9221-66666ECCDC35}">
+                <File Id="filFBA31735514623D8436FB134732A5610" KeyPath="yes" Source="driver\install.bat" />
+            </Component>
+			<Component Id="cmp2303C972BC1A37575C983A1A9C7CD902" Directory="dir1DB7D5B0CAD42001588B0CA879737F7F" Guid="{CAA8BE5B-8BA9-483C-A028-69BF21FE0312}">
+                <File Id="filDAACED607A0D48425A59AE9985B8E739" KeyPath="yes" Source="driver\uninstall.bat" />
+            </Component>
+			<Component Id="cmp2A5F6BACFABA385C15976556F19C9C07" Directory="dir1DB7D5B0CAD42001588B0CA879737F7F" Guid="{F0BA8A3A-00DA-4724-AD7B-FA333B4A1562}">
+				<File Id="fil3786E44A3B64C0547FDFC05DEE7D1EF2" KeyPath="yes" Source="driver\dpinst.xml" />
+			</Component>
+			<Component Id="cmp0A292F2C1A5BBE4F25B453CEADAB0347" Directory="dir1DB7D5B0CAD42001588B0CA879737F7F" Guid="{49094E59-845F-4C06-B110-9BEDD698C29D}">
+				<File Id="fil3B34AD313FF285C8A35BC85AF83DF4EC" KeyPath="yes" Source="driver\dpinst32.exe" />
+			</Component>
+			<Component Id="cmp3502915E415AC104C9D83BE90887E25C" Directory="dir1DB7D5B0CAD42001588B0CA879737F7F" Guid="{51E7133B-EF55-4A5F-A4F1-4C8233D5D3C4}">
+				<File Id="filCCB6E53F676F65DAED76BAF34CA08D5C" KeyPath="yes" Source="driver\dpinst64.exe" />
+			</Component>
+			<Component Id="cmp009C3902E8E46969C72D77E138F737FC" Directory="dir1DB7D5B0CAD42001588B0CA879737F7F" Guid="{F69F7524-04CA-4B61-BDA8-BEA07ABDA272}">
+				<File Id="fil1318DA0E76011644981766F2619A908A" KeyPath="yes" Source="driver\dpscat32.exe" />
+			</Component>
+			<Component Id="cmp009C3902E8E46969C72D77E138F737FD" Directory="dir1DB7D5B0CAD42001588B0CA879737F7F" Guid="{3528bbb7-43ac-42b3-a182-a3f514c5bce6}">
+				<File Id="fil1318DA0E76011644981766F2619A908B" KeyPath="yes" Source="driver\dpscat64.exe" />
+			</Component>
+		</ComponentGroup>
+		<ComponentGroup Id="LibusbK">
+			<Component Id="cmpACCDB7CEEA33552DF0BF9EEA140DA2B5" Directory="dir1DB7D5B0CAD42001588B0CA879737F7F" Guid="{1311C346-43C8-450C-8471-A69313A23477}">
+                <File Id="fil1A89094E4D41B6C9013A0AC7F1A466CB" KeyPath="yes" Source="driver\kiibohd.inf" />
+            </Component>
+			<Component Id="cmpF074963A7C125D75F96B3574859BF94F" Directory="dir2779E0C89E141675772A8C1A67639128" Guid="{FD4EB52C-0F8C-4C2F-B2B1-D106224C6BBC}">
+				<File Id="filA30FF11F923F0ACBB3DA821D85839ED1" KeyPath="yes" Source="driver\amd64\libusb0.dll" />
+			</Component>
+			<Component Id="cmp862F84AE590701A2B984A183D651DB2A" Directory="dir2779E0C89E141675772A8C1A67639128" Guid="{6C84061F-E523-4A2A-AE3E-2FA3337FE198}">
+				<File Id="fil17AADAAD20F8933AB651781B4C13EDED" KeyPath="yes" Source="driver\amd64\libusb0_x86.dll" />
+			</Component>
+			<Component Id="cmp31ECDC6ED49402F060393276C9FDF295" Directory="dir2779E0C89E141675772A8C1A67639128" Guid="{E50027A5-4FBC-4187-B80C-3EDAF4FE2C1D}">
+				<File Id="fil14C9447306B24D08EDDE986181D04E42" KeyPath="yes" Source="driver\amd64\libusbK.dll" />
+			</Component>
+			<Component Id="cmp56C715B0F4D958FE0CA1250125167B0D" Directory="dir2779E0C89E141675772A8C1A67639128" Guid="{C8B7BA77-3875-44DC-A197-E9E978EE5EFC}">
+				<File Id="filF1AAB90F9FF38FECDD5C4BD4E7E3484C" KeyPath="yes" Source="driver\amd64\libusbK.sys" />
+			</Component>
+			<Component Id="cmp40F1C97D8392982D3648A27CD9373C76" Directory="dir2779E0C89E141675772A8C1A67639128" Guid="{230440B1-9C3E-463B-ACAB-D44D4D960022}">
+				<File Id="fil833E3A09657E42E29C7111D5E1F985F0" KeyPath="yes" Source="driver\amd64\libusbK_x86.dll" />
+			</Component>
+			<Component Id="cmpB7001A5BDD5D59350766022132D4F224" Directory="dir2779E0C89E141675772A8C1A67639128" Guid="{7E41FF83-3B5D-4731-A29B-91548837FA19}">
+				<File Id="filF6D0F790ED792AA2CE6369AD0D3B6FF5" KeyPath="yes" Source="driver\amd64\WdfCoInstaller01009.dll" />
+			</Component>
+			<Component Id="cmp5BE6A3C0D8DC0D87CC537963B271071A" Directory="dir5F2A2DA3699DA074D0C0C7B0B42199AB" Guid="{98092E21-2EDA-4B1B-8BDC-1698F97746D3}">
+				<File Id="filA625BC370591C04E7B5D0C5F621D3B8F" KeyPath="yes" Source="driver\x86\libusb0.dll" />
+			</Component>
+			<Component Id="cmp4011290CDE368460B813EA7632A82B9A" Directory="dir5F2A2DA3699DA074D0C0C7B0B42199AB" Guid="{9CAF7AE8-3765-451F-8825-B62C27153041}">
+				<File Id="filF3854CA512F9CDA26B2AA7B716C7DBE2" KeyPath="yes" Source="driver\x86\libusbK.dll" />
+			</Component>
+			<Component Id="cmp752ADDDA56328FCDD098F36A08963735" Directory="dir5F2A2DA3699DA074D0C0C7B0B42199AB" Guid="{DECDA2DE-78F2-4818-9C72-763B8C3B49D2}">
+				<File Id="fil48A3229A38C3F2479299F048CBA61D35" KeyPath="yes" Source="driver\x86\libusbK.sys" />
+			</Component>
+			<Component Id="cmp2BD44B6E8B373DBB5853C82CAB39B87D" Directory="dir5F2A2DA3699DA074D0C0C7B0B42199AB" Guid="{702D39A9-9F0C-416A-B1D5-1D712C4B3A2A}">
+				<File Id="fil3054BB98FA932EBC8F012A9833F33937" KeyPath="yes" Source="driver\x86\WdfCoInstaller01009.dll" />
+			</Component>
+		</ComponentGroup>
+			
+		<ComponentGroup Id="Dfu32">
+			<Component Id="cmpD09F3F8D9623414557F88CF6B34B81AC" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{D0076B48-15A2-4816-AF87-4C494F4DAC70}">
+                <File Id="filEFCDD4228BB6A63153D5FA9AFA40F022" KeyPath="yes" Source="dfu-util-0.8-win32\dfu-prefix.exe" />
+				<Condition>NOT VersionNT64</Condition>
+            </Component>
+            <Component Id="cmp789998899845B7E5ECCBCFD69218BC55" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{025EC37A-04F3-4BDB-81B0-C311FFF616E4}">
+                <File Id="fil6DFCA51F4E74769F53D5EC91C4574178" KeyPath="yes" Source="dfu-util-0.8-win32\dfu-suffix.exe" />
+				<Condition>NOT VersionNT64</Condition>
+            </Component>
+            <!-- <Component Id="cmpF514CBC248908D85370DD9D2AC3B5D18" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{719AAAF3-426C-42D1-9FBB-5F5443509EA1}">
+                <File Id="fil4F1EFA66F9AE10CEE3970DD6AD23E7C3" KeyPath="yes" Source="dfu-util-0.8-win32\dfu-util-static.exe" />
+				<Condition>NOT VersionNT64</Condition>
+            </Component> -->
+            <Component Id="cmp7D4E57EF5417756467B2534FB067AF9F" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{744CC3AF-7829-4EF7-B957-BABA5F6A9B44}">
+                <File Id="fil6B9ABE328EF705960526803714F32080" KeyPath="yes" Source="dfu-util-0.8-win32\dfu-util.exe" />
+				<Condition>NOT VersionNT64</Condition>
+            </Component>
+            <Component Id="cmp97A15B73A2883C0614ED04224BE14B36" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{A0802037-95E1-41EA-BDA3-F4B0A175C7DE}">
+                <File Id="fil651FFBEEC1292AD2786077EA35001B75" KeyPath="yes" Source="dfu-util-0.8-win32\libusb-1.0.dll" />
+				<Condition>NOT VersionNT64</Condition>
+            </Component>
+		</ComponentGroup>
+			
+		<ComponentGroup Id="Dfu64">
+			<Component Id="cmp5F51CA0B1B7B22CEF3E23AC3591DB7ED" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{DE839D51-0B84-4FEB-AA7D-A373FE242C7F}">
+                <File Id="fil0DBCA724A2183D650BF5D9A8DE815558" KeyPath="yes" Source="dfu-util-0.9-win64\dfu-prefix.exe" />
+				<Condition>VersionNT64</Condition>
+            </Component>
+            <Component Id="cmp99450146100909FF603701E0ED984C0A" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{12EC1F9B-4A09-4D5A-8E9D-AA24529A43B8}">
+                <File Id="filEC7E1706CCAEE02A4F00E6A9F76D72A1" KeyPath="yes" Source="dfu-util-0.9-win64\dfu-suffix.exe" />
+				<Condition>VersionNT64</Condition>
+            </Component>
+            <Component Id="cmpA3FB78B1537F82B83F7E61A48D1EAA86" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{17816E0B-BFCC-417F-B486-BD1FEF32222E}">
+                <File Id="fil21F022B75995064B283CBE1B319220C1" KeyPath="yes" Source="dfu-util-0.9-win64\dfu-util-manual.pdf" />
+				<Condition>VersionNT64</Condition>
+            </Component>
+            <!-- <Component Id="cmpD330AF4E9BBF04AFCC48F3867354CCBD" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{17F895D5-C951-4212-BB8E-F056C345AD00}">
+                <File Id="filDC4C3C9F92FDB4E2E8A177CE2E7A6C58" KeyPath="yes" Source="dfu-util-0.9-win64\dfu-util-static.exe" />
+				<Condition>VersionNT64</Condition>
+            </Component> -->
+            <Component Id="cmpB7F48E2B778B9319206FDEA0CC8F8AE7" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{6CB402F0-7007-45E5-897B-D905461E90C1}">
+                <File Id="fil2695818E184D289C98A479666D14F3F3" KeyPath="yes" Source="dfu-util-0.9-win64\dfu-util.exe" />
+				<Condition>VersionNT64</Condition>
+            </Component>
+            <Component Id="cmp49FC51C42A3441974D2AAE3B5FDB8C51" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{82DDA99F-1C90-46B9-A291-8B00894DD662}">
+                <File Id="filB57F8EA88395AFAFB0CE5729659C6F4C" KeyPath="yes" Source="dfu-util-0.9-win64\libusb-1.0.dll" />
+				<Condition>VersionNT64</Condition>
+            </Component>
+            <!-- <Component Id="cmp67043CBAF5919FF7B5DDDF31B2E7DCBD" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{DC4733BE-6942-4126-8E99-07BCB1446ABE}">
+                <File Id="filF4273C8A4C6B1E03F721CCF78F6FBC36" KeyPath="yes" Source="dfu-util-0.9-win64\README.txt" />
+				<Condition>VersionNT64</Condition>
+            </Component> -->
+        </ComponentGroup>
+		
+		<ComponentGroup Id="kiidrv">
+			<Component Id="cmp471D107A44BD31BA8F6086D5A56FE89E" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{E5D4BAF2-AD60-47D7-BE96-26B26D1D56B7}">
+				<File Id="filC6902F3865A2A1E885F2C95E334C14F8" KeyPath="yes" Source="kiidrv\fix-devices.bat" />
+			</Component>
+			<Component Id="cmpBFAB9D54471E5737753FF867E0E74C96" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{E85ED821-5B92-40CD-A1E4-FB5499ABB906}">
+				<File Id="fil53DA614D223EAE4CBC95558FC7038F9D" KeyPath="yes" Source="kiidrv\install-drivers.bat" />
+			</Component>
+			<Component Id="cmpBDE0187E878DB0EB43B7151D4CF6BED7" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{0FAA6897-B883-405E-8527-567A7D00DF07}">
+				<File Id="filA14F16E265D383F03EF41703B1B302E3" KeyPath="yes" Source="kiidrv\kiibohd.conf" />
+			</Component>
+			<Component Id="cmp3161A529211C2BEF940DFD2A92940CFF" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB"  Guid="{5FE9061E-8333-4B1A-B047-B06906580482}">
+				<File Id="fil4F45B10B91ED50A2E96AEFCEC6D02BAE" KeyPath="yes" Source="kiidrv\purge-zadig.bat" />
+			</Component>
+		</ComponentGroup>
+		
+		<ComponentGroup Id="kiidrv32">
+            <Component Id="cmpFC625876AB1A0808487B147C1DD8C669" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{89C65602-057C-42A4-80E2-B81917915679}">
+                <File Id="filBFF6E289B397DA1F1F030F0A985653E4" KeyPath="yes" Source="kiidrv\kiidrv-Win32-Release.exe" />
+				<Condition>NOT VersionNT64</Condition>
+            </Component>
+        </ComponentGroup>
+		
+		<ComponentGroup Id="kiidrv64">
+            <Component Id="cmp43B681F1C9D5A8497A0D1B2D9B7B28F3" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{30F639A0-C522-4DD1-A2CB-13AF5E17D9C3}">
+                <File Id="fil092ED0B64A135BB3A063431654CF3A86" KeyPath="yes" Source="kiidrv\kiidrv-x64-Release.exe" />
+				<Condition>VersionNT64</Condition>
+            </Component>
+        </ComponentGroup>
+		
+		<ComponentGroup Id="BOSSA">
+            <Component Id="cmp71F90DB749E04FC9E1AC56DA543E0D89" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{35379AFC-5243-40AA-8DD4-C4F4300080AA}">
+                <File Id="fil0B8C8F169BDDDABA35B6AD7484D9C589" KeyPath="yes" Source="bossa\bossa.exe" />
+            </Component>
+            <Component Id="cmpFB0BF62489627DE7CA2C66DD5597E9D1" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{5BA8B00F-18BC-41D3-B08B-970118CBCB93}">
+                <File Id="fil633318BBD7E966A0FF0D4D2F5D7A75E0" KeyPath="yes" Source="bossa\bossac.exe" />
+            </Component>
+            <Component Id="cmp918947E049AC0C1FB9E89B6A0BE70C6C" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{8A22366F-9040-4BA3-8A5E-C2B0A9575856}">
+                <File Id="fil45200C2BBF7157EB022A7ACBF356C196" KeyPath="yes" Source="bossa\bossash.exe" />
+            </Component>
+		</ComponentGroup>
+		
+		<ComponentGroup Id="Zadig">
+			<Component Id="cmp890DDE4DA7063B3D3D750E7152D4133D" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{021279DF-B565-4059-8AAB-DB8E116A596C}">
+                <File Id="fil42033844173589E27E6F8022E735E185" KeyPath="yes" Source="zadig-2.4.exe" />
+            </Component>
+		</ComponentGroup>
+
+		<Feature Id='Complete' Level='1' Title='$(var.Product)' ConfigurableDirectory='INSTALLDIR'>
+			<Feature Id='MainProgram' Level='1' Title='Program' Description='The main executable.'>
+				<ComponentGroupRef Id='Configurator' />
+				<ComponentGroupRef Id='Locales' />
+				<ComponentRef Id='ProgramMenuDir' />
+			</Feature>
+			
+			<Feature Id='Bin32' Level='0' Title='Utilities'>
+				<Condition Level="1">NOT VersionNT64</Condition>
+				<ComponentGroupRef Id="Dfu32" />
+				<ComponentGroupRef Id="kiidrv" />
+				<ComponentGroupRef Id="kiidrv32" />
+			</Feature>
+			
+			<Feature Id='Bin64' Level='0' Title='Utilities'>
+				<Condition Level="1">VersionNT64</Condition>
+				<ComponentGroupRef Id="Dfu64" />
+				<ComponentGroupRef Id="kiidrv" />
+				<ComponentGroupRef Id="kiidrv64" />
+			</Feature>
+			
+			<Feature Id='Utils' Level='1' Title='Utilities' Description='Useful tools'>
+				<ComponentGroupRef Id="BOSSA" />
+				<ComponentGroupRef Id="Zadig" />
+			</Feature>
+			
+			<Feature Id='Driver' Level='1' Title='Driver' Description='Libusbk driver.'>
+				<ComponentGroupRef Id="dpinst" />
+				<ComponentGroupRef Id="LibusbK" />
+			</Feature>
+		</Feature>
+
+		<CustomAction Id='SignDriver'
+					  Directory='dir1DB7D5B0CAD42001588B0CA879737F7F'
+					  ExeCommand='[INSTALLDIR]\driver\dpscat.exe'
+					  Execute='deferred' Impersonate='no'
+					  Return='ignore' />
+		<CustomAction Id='KiidrvInstall'
+					  Directory='dirF8C45BF1D3FC96F21585483698DCBDDB'
+					  ExeCommand='[INSTALLDIR]\utils\install-drivers.bat'
+					  Execute='deferred' Impersonate='no'
+					  Return='ignore' />
+		<CustomAction Id='InstallDriver32'
+					  Directory='dir1DB7D5B0CAD42001588B0CA879737F7F'
+					  ExeCommand='[INSTALLDIR]\driver\dpinst64.exe /f /se'
+					  Execute='deferred' Impersonate='no'
+					  Return='ignore' />
+		<CustomAction Id='InstallDriver64'
+					  Directory='dir1DB7D5B0CAD42001588B0CA879737F7F'
+					  ExeCommand='[INSTALLDIR]\driver\dpinst64.exe /f /se'
+					  Execute='deferred' Impersonate='no'
+					  Return='ignore' />
+		<CustomAction Id='UninstallDriver32'
+					  Directory='dir1DB7D5B0CAD42001588B0CA879737F7F'
+					  ExeCommand='dpinst32.exe /u kiibohd.inf /d /se'
+					  Execute='deferred' Impersonate='no'
+					  Return='ignore' />
+		<CustomAction Id='UninstallDriver64'
+					  Directory='dir1DB7D5B0CAD42001588B0CA879737F7F'
+					  ExeCommand='dpinst64.exe /u kiibohd.inf /d /se'
+					  Execute='deferred' Impersonate='no'
+					  Return='ignore' />
+		
+		<InstallExecuteSequence>
+			<Custom Action="KiidrvInstall" After="InstallFiles"></Custom>
+			<Custom Action="SignDriver" After="InstallFiles"></Custom>
+			<Custom Action="InstallDriver32" After="SignDriver">NOT VersionNT64</Custom>
+			<Custom Action="InstallDriver64" After="SignDriver">VersionNT64</Custom>
+			<Custom Action="UninstallDriver32" After="RemoveRegistryValues">Installed AND NOT VersionNT64</Custom>
+			<Custom Action="UninstallDriver64" After="RemoveRegistryValues">Installed AND VersionNT64</Custom>
+		</InstallExecuteSequence>
+		
+		<MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage="A later version of $(var.Product) is already installed. Setup will now exit."/>
+		
+		<Icon Id="Configurator.ico" SourceFile="Configurator.ico" />
+		<Property Id="ARPPRODUCTICON" Value="Configurator.ico" />
+		
+		<UI>
+			<UIRef Id="WixUI_Minimal" />
+			<UIRef Id="WixUI_ErrorProgressText" />
+		
+			<Publish Dialog="ExitDialog" Control="Finish" 
+				Event="DoAction" Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
+		</UI>
+		
+		<Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+		<Property Id="LicenseAccepted" Value="1" />
+		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1"/>
+		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch $(var.Product)" />
+		<Property Id="WixShellExecTarget" Value="[#ConfiguratorExe]" />
+		
+		<WixVariable Id="WixUILicenseRtf" Value="intro.rtf" />
+		<WixVariable Id="WixUIBannerBmp" Value="banner.bmp" />
+		<WixVariable Id="WixUIDialogBmp" Value="dialog.bmp" />
+		
+		<!-- <CustomAction Id='LaunchApplication' FileKey='ConfiguratorExe' ExeCommand='' Return='asyncNoWait' /> -->
+		
+		<CustomAction Id="LaunchApplication" 
+			BinaryKey="WixCA" 
+			DllEntry="WixShellExec"
+			Impersonate="yes" />
+		
+	</Product>
+</Wix>

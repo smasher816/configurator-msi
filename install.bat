@@ -1,0 +1,1 @@
+msiexec /i Configurator.msi /L*V install.log

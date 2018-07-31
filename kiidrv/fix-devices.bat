@@ -1,0 +1,1 @@
+kiidrv --fixup --verify

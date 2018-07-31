@@ -1,0 +1,13 @@
+bossa/
+dfu-util-*/
+driver/x86
+driver/amd64
+driver/dpscat*.exe
+kiibohd-configurator/
+kiidrv/kiidrv*.exe
+kiidrv/kiibohd.conf
+Configurator.msi
+Configurator.wixobj
+Configurator.wixpdb
+install.log
+zadig*.exe
