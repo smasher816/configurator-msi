@@ -608,14 +608,19 @@
 			</Feature>
 		</Feature>
 
-		<CustomAction Id='SignDriver'
-					  Directory='dir1DB7D5B0CAD42001588B0CA879737F7F'
-					  ExeCommand='[INSTALLDIR]\driver\dpscat.exe'
-					  Execute='deferred' Impersonate='no'
-					  Return='ignore' />
 		<CustomAction Id='KiidrvInstall'
 					  Directory='dirF8C45BF1D3FC96F21585483698DCBDDB'
 					  ExeCommand='[INSTALLDIR]\utils\install-drivers.bat'
+					  Execute='deferred' Impersonate='no'
+					  Return='ignore' />
+	    	<CustomAction Id='SignDriver32'
+					  Directory='dir1DB7D5B0CAD42001588B0CA879737F7F'
+					  ExeCommand='[INSTALLDIR]\driver\dpscat32.exe'
+					  Execute='deferred' Impersonate='no'
+					  Return='ignore' />
+	    	<CustomAction Id='SignDriver64'
+					  Directory='dir1DB7D5B0CAD42001588B0CA879737F7F'
+					  ExeCommand='[INSTALLDIR]\driver\dpscat64.exe'
 					  Execute='deferred' Impersonate='no'
 					  Return='ignore' />
 		<CustomAction Id='InstallDriver32'
@@ -641,7 +646,8 @@
 		
 		<InstallExecuteSequence>
 			<Custom Action="KiidrvInstall" After="InstallFiles"></Custom>
-			<Custom Action="SignDriver" After="InstallFiles"></Custom>
+			<Custom Action="SignDriver32" After="InstallFiles">NOT VersionNT64</Custom>
+			<Custom Action="SignDriver64" After="InstallFiles">VersionNT64</Custom>
 			<Custom Action="InstallDriver32" After="SignDriver">NOT VersionNT64</Custom>
 			<Custom Action="InstallDriver64" After="SignDriver">VersionNT64</Custom>
 			<Custom Action="UninstallDriver32" After="RemoveRegistryValues">Installed AND NOT VersionNT64</Custom>
