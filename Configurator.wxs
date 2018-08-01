@@ -648,8 +648,8 @@
 			<Custom Action="KiidrvInstall" After="InstallFiles"></Custom>
 			<Custom Action="SignDriver32" After="InstallFiles">NOT VersionNT64</Custom>
 			<Custom Action="SignDriver64" After="InstallFiles">VersionNT64</Custom>
-			<Custom Action="InstallDriver32" After="SignDriver">NOT VersionNT64</Custom>
-			<Custom Action="InstallDriver64" After="SignDriver">VersionNT64</Custom>
+			<Custom Action="InstallDriver32" After="SignDriver32">NOT VersionNT64</Custom>
+			<Custom Action="InstallDriver64" After="SignDriver64">VersionNT64</Custom>
 			<Custom Action="UninstallDriver32" After="RemoveRegistryValues">Installed AND NOT VersionNT64</Custom>
 			<Custom Action="UninstallDriver64" After="RemoveRegistryValues">Installed AND VersionNT64</Custom>
 		</InstallExecuteSequence>
