@@ -546,14 +546,14 @@
 		
 		<ComponentGroup Id="kiidrv32">
             <Component Id="cmpFC625876AB1A0808487B147C1DD8C669" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{89C65602-057C-42A4-80E2-B81917915679}">
-                <File Id="filBFF6E289B397DA1F1F030F0A985653E4" KeyPath="yes" Source="kiidrv\kiidrv-Win32-Release.exe" />
+                <File Id="filBFF6E289B397DA1F1F030F0A985653E4" KeyPath="yes" Source="kiidrv\kiidrv-Win32-Release.exe" Name="kiidrv.exe" />
 				<Condition>NOT VersionNT64</Condition>
             </Component>
         </ComponentGroup>
 		
 		<ComponentGroup Id="kiidrv64">
             <Component Id="cmp43B681F1C9D5A8497A0D1B2D9B7B28F3" Directory="dirF8C45BF1D3FC96F21585483698DCBDDB" Guid="{30F639A0-C522-4DD1-A2CB-13AF5E17D9C3}">
-                <File Id="fil092ED0B64A135BB3A063431654CF3A86" KeyPath="yes" Source="kiidrv\kiidrv-x64-Release.exe" />
+                <File Id="fil092ED0B64A135BB3A063431654CF3A86" KeyPath="yes" Source="kiidrv\kiidrv-x64-Release.exe" Name="kiidrv.exe" />
 				<Condition>VersionNT64</Condition>
             </Component>
         </ComponentGroup>
