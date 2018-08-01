@@ -43,7 +43,7 @@ deploy:
   # GitHub Releases
   - provider: GitHub
     auth_token:
-      secure: ccb8399b00f512cff4f1c0e605b89caa8452e10c
+      secure: 3UGeZ8nGogXJjF2OaURced0V2BDoBqF/jJ/HIPNrd/jw7u9u6HOujERCMcxH6KqD
     artifact: /.*\.msi/
     draft: true
     prerelease: false
