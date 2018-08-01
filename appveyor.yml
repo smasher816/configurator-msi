@@ -1,0 +1,50 @@
+# appveyor file for controller-msi
+
+# General Build Configuration
+version: "{build}"
+
+os: Visual Studio 2017
+
+init:
+  - git config --global core.autocrlf input
+
+# Build Setup
+build:
+  verbosity: detailed
+
+
+# Build Matrix
+platform:
+  - Win32
+
+configuration:
+  - Release
+
+
+# Build Dependencies
+install:
+  - set PATH=C:\Program Files (x86)\WiX Toolset v3.11\bin;%PATH%
+  - update.bat
+  - dir
+
+
+# Build Steps
+build_script:
+  - make.bat
+
+
+# Package Artifacts
+artifacts:
+  - path: 'Configurator.msi'
+
+
+# Build Artifact Push (tagged releases only)
+deploy:
+  # GitHub Releases
+  - provider: GitHub
+    auth_token:
+      secure: ccb8399b00f512cff4f1c0e605b89caa8452e10c
+    artifact: /.*\.msi/
+    draft: true
+    prerelease: false
+    description: 'Windows installer for the Input Club Kiibohd Configurator'
