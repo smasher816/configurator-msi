@@ -34,8 +34,8 @@ build_script:
   
 
 # Post Build Steps
-after_build:
-  - msiexec /i Configurator.msi /quiet /qn /norestart /log install.log
+#after_build:
+#  - msiexec /i Configurator.msi /quiet /qn /norestart /log install.log
 
 # Package Artifacts
 artifacts:
