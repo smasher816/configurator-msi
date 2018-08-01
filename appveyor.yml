@@ -23,15 +23,19 @@ configuration:
 
 # Build Dependencies
 install:
-  - set PATH=C:\Program Files (x86)\WiX Toolset v3.11\bin;%PATH%
   - update.bat
   - dir
 
 
 # Build Steps
 build_script:
+  - set PATH=C:\Program Files (x86)\WiX Toolset v3.11\bin;%PATH%
   - make.bat
+  
 
+# Post Build Steps
+after_build:
+  - msiexec /i Configurator.msi /quiet /qn /norestart /log install.log" 
 
 # Package Artifacts
 artifacts:
